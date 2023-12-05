@@ -9,14 +9,10 @@
 #ifndef MB_TCP_SERVER_H_
 #define MB_TCP_SERVER_H_
 
-class ModbusTcpServer{
-	public:
-	ModbusTcpServer()
-	{
-		//constructor
-	}
-	
-};
+
+
+
+
 
 
 
