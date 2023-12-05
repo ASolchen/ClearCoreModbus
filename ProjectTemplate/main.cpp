@@ -1,5 +1,6 @@
 
 #include "ClearCore.h"
+#include "mb_tcp_server.h"
 
 int main(void) {
     /* Replace with your application code below */

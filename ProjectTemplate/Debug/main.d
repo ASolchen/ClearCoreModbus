@@ -159,7 +159,7 @@ main.d main.o: .././main.cpp ../../libClearCore/inc/ClearCore.h \
  ../../libClearCore/inc/SysManager.h \
  ../../libClearCore/inc/MotorManager.h \
  ../../libClearCore/inc/SdCardDriver.h ../../libClearCore/inc/SerialUsb.h \
- ../../libClearCore/inc/XBeeDriver.h
+ ../../libClearCore/inc/XBeeDriver.h ../modbus/tcp/mb_tcp_server.h
 
 ../../libClearCore/inc/ClearCore.h:
 
@@ -498,3 +498,5 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 ../../libClearCore/inc/SerialUsb.h:
 
 ../../libClearCore/inc/XBeeDriver.h:
+
+../modbus/tcp/mb_tcp_server.h:
