@@ -1,11 +1,13 @@
-from pymodbus.client import ModbusTcpClient
-import time
+# echo-client.py
 
-with ModbusTcpClient('192.168.10.177') as clear_core:
-    for x in range(100):
-        res = clear_core.read_coils(1,10, slave=1)
-        print(res.bits)
-        time.sleep(0.05)
-        res = clear_core.read_holding_registers(x,1,slave=1)
-        print(res.registers)
-        time.sleep(0.05)
+import socket
+
+HOST = "192.168.10.177"  # The server's hostname or IP address
+PORT = 502  # The port used by the server
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.connect((HOST, PORT))
+    s.sendall(b"Hello, world")
+    data = s.recv(1024)
+
+print(f"Received {data!r}")

@@ -166,7 +166,7 @@ main.d main.o: .././main.cpp ../../libClearCore/inc/ClearCore.h \
  ../../LwIP/LwIP/src/include/lwip/tcpbase.h \
  ../../LwIP/LwIP/src/include/lwip/icmp.h \
  ../../LwIP/LwIP/src/include/lwip/prot/icmp.h \
- ../../libClearCore/inc/EthernetTcpClient.h ../modbus/tcp/mb_tcp_server.h
+ ../../libClearCore/inc/EthernetTcpClient.h
 
 ../../libClearCore/inc/ClearCore.h:
 
@@ -519,5 +519,3 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 ../../LwIP/LwIP/src/include/lwip/prot/icmp.h:
 
 ../../libClearCore/inc/EthernetTcpClient.h:
-
-../modbus/tcp/mb_tcp_server.h:
