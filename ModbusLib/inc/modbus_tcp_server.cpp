@@ -53,6 +53,7 @@ int ModbusTcpServer::Begin()
 		EthernetMgr.NetmaskIp(netmask);
 	}
 	// Initialize the ClearCore as a server 
+	InitContext();
 	// Clients connect on specified port (502 by default)
 	_server = new EthernetTcpServer(MODBUS_PORT);
 	// Initialize an array of clients
@@ -143,6 +144,7 @@ int ModbusTcpServer::HandleRequest(int client_idx)
 		_rx_len = _clients[client_idx].Read(_rx_buffer, BUFFER_LENGTH);
 		
 		//send to libmodbus here
+		//_modbus_receive_msg(_ctx, _rx_buffer, MSG_INDICATION);
 		
 		// Clear the message buffer for the next iteration of the loop
 		for(int i=0; i<BUFFER_LENGTH; i++){
@@ -152,4 +154,13 @@ int ModbusTcpServer::HandleRequest(int client_idx)
 	//Sends unique response to the client
 	_tx_len = sprintf((char*)_tx_buffer, "Hello client %s",_clients[client_idx].RemoteIp().StringValue());
 	return _clients[client_idx].Send(_tx_buffer, _tx_len); //bytes sent
+}
+
+
+int ModbusTcpServer::InitContext()
+{
+	//_ctx = (modbus_t *)malloc(sizeof(modbus_t));
+	//_modbus_init_common(_ctx);
+	//modbus_set_slave(_ctx, MODBUS_TCP_SLAVE);
+	return 0;
 }

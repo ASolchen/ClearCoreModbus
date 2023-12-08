@@ -278,8 +278,24 @@
     <Folder Include="inc\" />
     <Content Include="inc\**\*.*" />
     <Content Include="src\**\*.*" />
+    <Folder Include="inc\libmodbus" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="inc\libmodbus\modbus-data.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="inc\libmodbus\modbus-private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="inc\libmodbus\modbus-version.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="inc\libmodbus\modbus.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="inc\libmodbus\modbus.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="inc\modbus_tcp_server.cpp">
       <SubType>compile</SubType>
     </Compile>

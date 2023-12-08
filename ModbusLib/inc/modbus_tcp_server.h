@@ -13,8 +13,11 @@
 #include "EthernetTcpServer.h"
 #define NUMBER_OF_CLIENTS 6 // Set total number of clients the server will accept
 #define MODBUS_PORT 502
+#define MODBUS_TCP_SLAVE 0xFF
 #define BUFFER_LENGTH 512
 #define MODBUS_TCP_TIMEOUT 5000
+//#include "libmodbus/modbus.h"
+//#include "libmodbus/modbus-private.h"
 
 class ModbusTcpServer
 {
@@ -31,6 +34,8 @@ private:
 	EthernetTcpClient _clients[NUMBER_OF_CLIENTS];
 	bool _newClient = 0;
     uint32_t _startTime;
+	//modbus_t *_ctx; //modbus context
+	
 
 //functions
 public:
@@ -45,6 +50,7 @@ private:
 	ModbusTcpServer& operator=( const ModbusTcpServer &c );
 	int AcceptClient();
 	int HandleRequest(int);
+	int InitContext();
 
 }; //ModbusTcpServer
 
