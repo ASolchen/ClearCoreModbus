@@ -1,4 +1,4 @@
-main.d main.o: .././main.cpp ../../ModbusLib/inc/modbus_tcp_server.h \
+inc/libModbus.d inc/libModbus.o: ../inc/libModbus.cpp ../inc/libModbus.h \
  ../../libClearCore/inc/ClearCore.h ../../libClearCore/inc/AdcManager.h \
  ../../libClearCore/inc/IirFilter.h ../../libClearCore/inc/SysTiming.h \
  ../../libClearCore/inc/CcioBoardManager.h \
@@ -168,7 +168,7 @@ main.d main.o: .././main.cpp ../../ModbusLib/inc/modbus_tcp_server.h \
  ../../LwIP/LwIP/src/include/lwip/prot/icmp.h \
  ../../libClearCore/inc/EthernetTcpClient.h
 
-../../ModbusLib/inc/modbus_tcp_server.h:
+../inc/libModbus.h:
 
 ../../libClearCore/inc/ClearCore.h:
 

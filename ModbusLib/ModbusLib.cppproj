@@ -277,14 +277,13 @@
   <ItemGroup>
     <Folder Include="inc\" />
     <Content Include="inc\**\*.*" />
-    <Folder Include="src\" />
     <Content Include="src\**\*.*" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="inc\libModbus.h">
+    <Compile Include="inc\modbus_tcp_server.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\libModbus.cpp">
+    <Compile Include="inc\modbus_tcp_server.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

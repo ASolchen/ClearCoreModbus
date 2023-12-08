@@ -33,13 +33,12 @@ LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
 SUBDIRS :=  \
-../inc/ \
-../src/
+../inc/
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../src/libModbus.cpp
+../inc/modbus_tcp_server.cpp
 
 
 PREPROCESSING_SRCS += 
@@ -49,16 +48,16 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-src/libModbus.o
+inc/modbus_tcp_server.o
 
 OBJS_AS_ARGS +=  \
-src/libModbus.o
+inc/modbus_tcp_server.o
 
 C_DEPS +=  \
-src/libModbus.d
+inc/modbus_tcp_server.d
 
 C_DEPS_AS_ARGS +=  \
-src/libModbus.d
+inc/modbus_tcp_server.d
 
 OUTPUT_FILE_PATH +=libModbusLib.a
 
@@ -74,7 +73,7 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-src/libModbus.o: ../src/libModbus.cpp
+inc/modbus_tcp_server.o: ../inc/modbus_tcp_server.cpp
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-g++.exe$(QUOTE) -mthumb -D__SAME53N19A__ -DARM_MATH_CM4 -DDEBUG -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\4.5.0\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include" -I"../inc" -I"../../LwIP/LwIP/port/include" -I"../../LwIP/LwIP/src/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"../../libClearCore/inc"  -O1 -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -g3 -Wall -Wextra -pedantic -mcpu=cortex-m4 -c -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -std=gnu++11 -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -MMD -v -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
