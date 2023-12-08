@@ -4,17 +4,19 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.ARMGCC.CPP</ToolchainName>
-    <ProjectGuid>dce6c7e3-ee26-4d79-826b-08594b9ad897</ProjectGuid>
+    <ProjectGuid>{af951dd9-67ef-41e5-b7a8-01de4598fc70}</ProjectGuid>
     <avrdevice>ATSAME53N19A</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
-    <OutputType>Executable</OutputType>
+    <OutputType>StaticLibrary</OutputType>
     <Language>CPP</Language>
-    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
-    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputFileName>lib$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.a</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>ProjectTemplate</AssemblyName>
-    <Name>ProjectTemplate</Name>
-    <RootNamespace>ProjectTemplate</RootNamespace>
+    <AvrGccProjectExtensions>
+    </AvrGccProjectExtensions>
+    <AssemblyName>ModbusLib</AssemblyName>
+    <Name>ModbusLib</Name>
+    <RootNamespace>ModbusLib</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -26,7 +28,7 @@
     <OverrideVtorValue>exception_table</OverrideVtorValue>
     <BootSegment>2</BootSegment>
     <ResetRule>0</ResetRule>
-    <eraseonlaunchrule>4</eraseonlaunchrule>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
     <EraseKey />
     <AsfFrameworkConfig>
       <framework-data>
@@ -40,10 +42,11 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
-    <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
-    <avrtoolserialnumber>J42700025721</avrtoolserialnumber>
+    <avrtool>com.atmel.avrdbg.tool.samice</avrtool>
+    <avrtoolserialnumber>504502241</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x61830303</avrdeviceexpectedsignature>
-    <avrtoolinterface>SWD</avrtoolinterface>
+    <avrtoolinterface>
+    </avrtoolinterface>
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
         <InterfaceProperties>
@@ -52,105 +55,21 @@
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J42700025721</ToolNumber>
+      <ToolNumber>J41800075798</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
-    <avrtoolinterfaceclock>2000000</avrtoolinterfaceclock>
-    <custom>
-      <ToolOptions xmlns="">
+    <avrtoolinterfaceclock>4000000</avrtoolinterfaceclock>
+    <com_atmel_avrdbg_tool_samice>
+      <ToolOptions>
         <InterfaceProperties>
+          <SwdClock>4000000</SwdClock>
         </InterfaceProperties>
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
-      <ToolType xmlns="">custom</ToolType>
-      <ToolNumber xmlns="">
-      </ToolNumber>
-      <ToolName xmlns="">Custom Programming Tool</ToolName>
-    </custom>
-    <CustomProgrammingToolCommand>"$(MSBuildProjectDirectory)\..\Tools\flash_clearcore.cmd" "$(OutputDirectory)\$(OutputFileName).bin"</CustomProgrammingToolCommand>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <ToolchainSettings>
-      <ArmGccCpp>
-  <armgcc.common.outputfiles.hex>False</armgcc.common.outputfiles.hex>
-  <armgcc.common.outputfiles.lss>False</armgcc.common.outputfiles.lss>
-  <armgcc.common.outputfiles.eep>False</armgcc.common.outputfiles.eep>
-  <armgcc.common.outputfiles.bin>True</armgcc.common.outputfiles.bin>
-  <armgcc.common.outputfiles.srec>False</armgcc.common.outputfiles.srec>
-  <armgcc.compiler.symbols.DefSymbols>
-    <ListValues>
-      <Value>NDEBUG</Value>
-    </ListValues>
-  </armgcc.compiler.symbols.DefSymbols>
-  <armgcc.compiler.directories.DefaultIncludePath>False</armgcc.compiler.directories.DefaultIncludePath>
-  <armgcc.compiler.directories.IncludePaths>
-    <ListValues>
-      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Include\</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
-    </ListValues>
-  </armgcc.compiler.directories.IncludePaths>
-  <armgcc.compiler.optimization.level>Optimize most (-O3)</armgcc.compiler.optimization.level>
-  <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
-  <armgcc.compiler.optimization.PrepareDataForGarbageCollection>True</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
-  <armgcc.compiler.optimization.EnableLongCalls>False</armgcc.compiler.optimization.EnableLongCalls>
-  <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
-  <armgcc.compiler.miscellaneous.OtherFlags>-std=gnu11 --param max-inline-insns-single=50 -MMD -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</armgcc.compiler.miscellaneous.OtherFlags>
-  <armgcccpp.compiler.symbols.DefSymbols>
-    <ListValues>
-      <Value>NDEBUG</Value>
-    </ListValues>
-  </armgcccpp.compiler.symbols.DefSymbols>
-  <armgcccpp.compiler.directories.DefaultIncludePath>False</armgcccpp.compiler.directories.DefaultIncludePath>
-  <armgcccpp.compiler.directories.IncludePaths>
-    <ListValues>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Include\</Value>
-      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
-      <Value>../../libClearCore/inc</Value>
-      <Value>../../LwIP/LwIP/src/include</Value>
-      <Value>../../LwIP/LwIP/port/include</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
-    </ListValues>
-  </armgcccpp.compiler.directories.IncludePaths>
-  <armgcccpp.compiler.optimization.level>Optimize most (-O3)</armgcccpp.compiler.optimization.level>
-  <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
-  <armgcccpp.compiler.optimization.EnableLongCalls>False</armgcccpp.compiler.optimization.EnableLongCalls>
-  <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
-  <armgcccpp.compiler.miscellaneous.OtherFlags>-std=gnu++11 -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -MMD -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</armgcccpp.compiler.miscellaneous.OtherFlags>
-  <armgcccpp.linker.general.AdditionalSpecs>Use rdimon (semihosting) library (--specs=rdimon.specs)</armgcccpp.linker.general.AdditionalSpecs>
-  <armgcccpp.linker.libraries.Libraries>
-    <ListValues>
-      <Value>libm</Value>
-      <Value>arm_cortexM4lf_math</Value>
-    </ListValues>
-  </armgcccpp.linker.libraries.Libraries>
-  <armgcccpp.linker.libraries.LibrarySearchPaths>
-    <ListValues>
-      <Value>%24(ProjectDir)\Device_Startup</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Lib\GCC</Value>
-    </ListValues>
-  </armgcccpp.linker.libraries.LibrarySearchPaths>
-  <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
-  <armgcccpp.linker.memorysettings.ExternalRAM />
-  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsame53n19a_flash.ld -mfloat-abi=hard -mfpu=fpv4-sp-d16</armgcccpp.linker.miscellaneous.LinkerFlags>
-  <armgcccpp.assembler.general.IncludePaths>
-    <ListValues>
-      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Include\</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
-    </ListValues>
-  </armgcccpp.assembler.general.IncludePaths>
-  <armgcccpp.preprocessingassembler.general.DefaultIncludePath>False</armgcccpp.preprocessingassembler.general.DefaultIncludePath>
-  <armgcccpp.preprocessingassembler.general.IncludePaths>
-    <ListValues>
-      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Include\</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
-    </ListValues>
-  </armgcccpp.preprocessingassembler.general.IncludePaths>
-</ArmGccCpp>
-    </ToolchainSettings>
-    <PostBuildEvent>"$(SolutionDir)\..\Tools\uf2-builder\Release\uf2-builder.exe" "$(OutputDirectory)\$(OutputFileName).bin" "$(OutputDirectory)\$(OutputFileName).uf2"</PostBuildEvent>
+      <ToolType>com.atmel.avrdbg.tool.samice</ToolType>
+      <ToolNumber>504502241</ToolNumber>
+      <ToolName>J-Link</ToolName>
+    </com_atmel_avrdbg_tool_samice>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
@@ -158,29 +77,41 @@
   <armgcc.common.outputfiles.hex>False</armgcc.common.outputfiles.hex>
   <armgcc.common.outputfiles.lss>False</armgcc.common.outputfiles.lss>
   <armgcc.common.outputfiles.eep>False</armgcc.common.outputfiles.eep>
-  <armgcc.common.outputfiles.bin>True</armgcc.common.outputfiles.bin>
+  <armgcc.common.outputfiles.bin>False</armgcc.common.outputfiles.bin>
   <armgcc.common.outputfiles.srec>False</armgcc.common.outputfiles.srec>
   <armgcc.compiler.symbols.DefSymbols>
     <ListValues>
+      <Value>ARM_MATH_CM4</Value>
+      <Value>DEBUG</Value>
       <Value>DEBUG</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.DefaultIncludePath>False</armgcc.compiler.directories.DefaultIncludePath>
   <armgcc.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
       <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
+      <Value>../../libClearCore/inc</Value>
+      <Value>../../LwIP/LwIP/port/include</Value>
+      <Value>../../LwIP/LwIP/src/include</Value>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>../inc</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
-  <armgcc.compiler.optimization.level>Optimize most (-O3)</armgcc.compiler.optimization.level>
+  <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcc.compiler.optimization.PrepareDataForGarbageCollection>True</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
   <armgcc.compiler.optimization.EnableLongCalls>False</armgcc.compiler.optimization.EnableLongCalls>
   <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
   <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
-  <armgcc.compiler.miscellaneous.OtherFlags>-std=gnu11 --param max-inline-insns-single=50 -MMD -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</armgcc.compiler.miscellaneous.OtherFlags>
+  <armgcc.compiler.warnings.ExtraWarnings>True</armgcc.compiler.warnings.ExtraWarnings>
+  <armgcc.compiler.warnings.Pedantic>True</armgcc.compiler.warnings.Pedantic>
+  <armgcc.compiler.miscellaneous.OtherFlags>-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -std=gnu11 --param max-inline-insns-single=50 -MMD</armgcc.compiler.miscellaneous.OtherFlags>
+  <armgcc.compiler.miscellaneous.Verbose>True</armgcc.compiler.miscellaneous.Verbose>
   <armgcccpp.compiler.symbols.DefSymbols>
     <ListValues>
+      <Value>ARM_MATH_CM4</Value>
+      <Value>DEBUG</Value>
       <Value>DEBUG</Value>
     </ListValues>
   </armgcccpp.compiler.symbols.DefSymbols>
@@ -189,87 +120,173 @@
     <ListValues>
       <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Include\</Value>
       <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
-      <Value>../../libClearCore/inc</Value>
-      <Value>../../LwIP/LwIP/src/include</Value>
+      <Value>../inc</Value>
       <Value>../../LwIP/LwIP/port/include</Value>
-      <Value>../../ModbusLib/inc</Value>
+      <Value>../../LwIP/LwIP/src/include</Value>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>../../libClearCore/inc</Value>
     </ListValues>
   </armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.optimization.level>Optimize (-O1)</armgcccpp.compiler.optimization.level>
   <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>
   <armgcccpp.compiler.optimization.EnableLongCalls>False</armgcccpp.compiler.optimization.EnableLongCalls>
-  <armgcccpp.compiler.optimization.DebugLevel>Default (-g2)</armgcccpp.compiler.optimization.DebugLevel>
+  <armgcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</armgcccpp.compiler.optimization.DebugLevel>
   <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
-  <armgcccpp.compiler.miscellaneous.OtherFlags>-std=gnu++11 -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -MMD -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</armgcccpp.compiler.miscellaneous.OtherFlags>
-  <armgcccpp.linker.general.AdditionalSpecs>Use rdimon (semihosting) library (--specs=rdimon.specs)</armgcccpp.linker.general.AdditionalSpecs>
+  <armgcccpp.compiler.warnings.ExtraWarnings>True</armgcccpp.compiler.warnings.ExtraWarnings>
+  <armgcccpp.compiler.warnings.Pedantic>True</armgcccpp.compiler.warnings.Pedantic>
+  <armgcccpp.compiler.miscellaneous.OtherFlags>-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -std=gnu++11 -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -MMD</armgcccpp.compiler.miscellaneous.OtherFlags>
+  <armgcccpp.compiler.miscellaneous.Verbose>True</armgcccpp.compiler.miscellaneous.Verbose>
   <armgcccpp.linker.libraries.Libraries>
     <ListValues>
       <Value>libm</Value>
-      <Value>arm_cortexM4lf_math</Value>
     </ListValues>
   </armgcccpp.linker.libraries.Libraries>
-  <armgcccpp.linker.libraries.LibrarySearchPaths>
-    <ListValues>
-      <Value>%24(ProjectDir)\Device_Startup</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Lib\GCC</Value>
-    </ListValues>
-  </armgcccpp.linker.libraries.LibrarySearchPaths>
   <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
   <armgcccpp.linker.memorysettings.ExternalRAM />
-  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tflash_with_bootloader.ld -mfloat-abi=hard -mfpu=fpv4-sp-d16</armgcccpp.linker.miscellaneous.LinkerFlags>
   <armgcccpp.assembler.general.IncludePaths>
     <ListValues>
-      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Include\</Value>
       <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
     </ListValues>
   </armgcccpp.assembler.general.IncludePaths>
   <armgcccpp.assembler.debugging.DebugLevel>Default (-g)</armgcccpp.assembler.debugging.DebugLevel>
-  <armgcccpp.preprocessingassembler.general.DefaultIncludePath>False</armgcccpp.preprocessingassembler.general.DefaultIncludePath>
   <armgcccpp.preprocessingassembler.general.IncludePaths>
     <ListValues>
-      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Include\</Value>
       <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
     </ListValues>
   </armgcccpp.preprocessingassembler.general.IncludePaths>
   <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
 </ArmGccCpp>
     </ToolchainSettings>
-    <PostBuildEvent>"$(SolutionDir)\..\Tools\uf2-builder\Release\uf2-builder.exe" "$(OutputDirectory)\$(OutputFileName).bin" "$(OutputDirectory)\$(OutputFileName).uf2"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <ArmGccCpp>
+  <armgcc.common.outputfiles.hex>False</armgcc.common.outputfiles.hex>
+  <armgcc.common.outputfiles.lss>False</armgcc.common.outputfiles.lss>
+  <armgcc.common.outputfiles.eep>False</armgcc.common.outputfiles.eep>
+  <armgcc.common.outputfiles.bin>False</armgcc.common.outputfiles.bin>
+  <armgcc.common.outputfiles.srec>False</armgcc.common.outputfiles.srec>
+  <armgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARM_MATH_CM4</Value>
+      <Value>NDEBUG</Value>
+      <Value>NDEBUG</Value>
+    </ListValues>
+  </armgcc.compiler.symbols.DefSymbols>
+  <armgcc.compiler.directories.DefaultIncludePath>False</armgcc.compiler.directories.DefaultIncludePath>
+  <armgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
+      <Value>../inc</Value>
+      <Value>../../LwIP/LwIP/port/include</Value>
+      <Value>../../LwIP/LwIP/src/include</Value>
+      <Value>../usb</Value>
+      <Value>../usb/device</Value>
+      <Value>../usb/class/cdc</Value>
+      <Value>../usb/class/cdc/device</Value>
+      <Value>../hal/include</Value>
+      <Value>../hal/utils/include</Value>
+      <Value>../hri</Value>
+      <Value>../hpl/core</Value>
+      <Value>../hpl/port</Value>
+      <Value>../hpl/usb</Value>
+      <Value>../config</Value>
+      <Value>../hpl/gclk</Value>
+      <Value>../hpl/mclk</Value>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+    </ListValues>
+  </armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
+  <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcc.compiler.optimization.PrepareDataForGarbageCollection>True</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
+  <armgcc.compiler.optimization.EnableLongCalls>False</armgcc.compiler.optimization.EnableLongCalls>
+  <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
+  <armgcc.compiler.warnings.ExtraWarnings>True</armgcc.compiler.warnings.ExtraWarnings>
+  <armgcc.compiler.warnings.Pedantic>True</armgcc.compiler.warnings.Pedantic>
+  <armgcc.compiler.miscellaneous.OtherFlags>-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -std=gnu11 --param max-inline-insns-single=50 -MMD</armgcc.compiler.miscellaneous.OtherFlags>
+  <armgcc.compiler.miscellaneous.Verbose>True</armgcc.compiler.miscellaneous.Verbose>
+  <armgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARM_MATH_CM4</Value>
+      <Value>NDEBUG</Value>
+      <Value>NDEBUG</Value>
+    </ListValues>
+  </armgcccpp.compiler.symbols.DefSymbols>
+  <armgcccpp.compiler.directories.DefaultIncludePath>False</armgcccpp.compiler.directories.DefaultIncludePath>
+  <armgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\arm\CMSIS\4.5.0\CMSIS\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
+      <Value>../inc</Value>
+      <Value>../../LwIP/LwIP/port/include</Value>
+      <Value>../../LwIP/LwIP/src/include</Value>
+      <Value>../config</Value>
+      <Value>../hal/include</Value>
+      <Value>../hal/utils/include</Value>
+      <Value>../hpl/core</Value>
+      <Value>../hpl/gclk</Value>
+      <Value>../hpl/mclk</Value>
+      <Value>../hpl/port</Value>
+      <Value>../hpl/usb</Value>
+      <Value>../hri</Value>
+      <Value>../usb</Value>
+      <Value>../usb/class/cdc</Value>
+      <Value>../usb/class/cdc/device</Value>
+      <Value>../usb/device</Value>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+    </ListValues>
+  </armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.optimization.level>Optimize for size (-Os)</armgcccpp.compiler.optimization.level>
+  <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareDataForGarbageCollection>
+  <armgcccpp.compiler.optimization.EnableLongCalls>False</armgcccpp.compiler.optimization.EnableLongCalls>
+  <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
+  <armgcccpp.compiler.warnings.ExtraWarnings>True</armgcccpp.compiler.warnings.ExtraWarnings>
+  <armgcccpp.compiler.warnings.Pedantic>True</armgcccpp.compiler.warnings.Pedantic>
+  <armgcccpp.compiler.miscellaneous.OtherFlags>-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -std=gnu++11 -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -MMD</armgcccpp.compiler.miscellaneous.OtherFlags>
+  <armgcccpp.compiler.miscellaneous.Verbose>True</armgcccpp.compiler.miscellaneous.Verbose>
+  <armgcccpp.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.Libraries>
+  <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
+  <armgcccpp.linker.memorysettings.ExternalRAM />
+  <armgcccpp.assembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
+    </ListValues>
+  </armgcccpp.assembler.general.IncludePaths>
+  <armgcccpp.assembler.debugging.DebugLevel>Default (-g)</armgcccpp.assembler.debugging.DebugLevel>
+  <armgcccpp.preprocessingassembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAME53_DFP\1.1.118\include</Value>
+    </ListValues>
+  </armgcccpp.preprocessingassembler.general.IncludePaths>
+  <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
+</ArmGccCpp>
+    </ToolchainSettings>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Device_Startup\flash_with_bootloader.ld">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Device_Startup\startup_same53.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="Device_Startup\flash_without_bootloader.ld">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="main.cpp">
-      <SubType>compile</SubType>
-    </Compile>
+    <Folder Include="inc\" />
+    <Content Include="inc\**\*.*" />
+    <Folder Include="src\" />
+    <Content Include="src\**\*.*" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Device_Startup\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\libClearCore\ClearCore.cppproj">
-      <Name>ClearCore</Name>
-      <Project>{2530d5b1-8a40-4a55-95ca-2ec0b63e2088}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LwIP\LwIP.cppproj">
-      <Name>LwIP</Name>
-      <Project>{c373696c-5d45-4b91-ad62-a21552361596}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ModbusLib\ModbusLib.cppproj">
-      <Name>ModbusLib</Name>
-      <Project>{af951dd9-67ef-41e5-b7a8-01de4598fc70}</Project>
-      <Private>True</Private>
-    </ProjectReference>
+    <Compile Include="inc\libModbus.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libModbus.cpp">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

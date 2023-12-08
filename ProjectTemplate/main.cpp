@@ -31,12 +31,12 @@
  * Copyright (c) 2022 Teknic Inc. This work is free to use, copy and distribute under the terms of
  * the standard MIT permissive software license which can be found at https://opensource.org/licenses/MIT
  */
-
+#include "libModbus.h"
 #include "ClearCore.h"
 #include "EthernetTcpServer.h"
 
 // The port number on the server over which packets will be sent/received 
-#define PORT_NUM 8888
+#define PORT_NUM 502
 
 // The maximum number of characters to receive from an incoming packet
 #define MAX_PACKET_LENGTH 100

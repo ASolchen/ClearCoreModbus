@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Atmel Studio Solution File, Format Version 11.00
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "ProjectTemplate", "ProjectTemplate.cppproj", "{DCE6C7E3-EE26-4D79-826B-08594B9AD897}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AF951DD9-67EF-41E5-B7A8-01DE4598FC70} = {AF951DD9-67EF-41E5-B7A8-01DE4598FC70}
+	EndProjectSection
 EndProject
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "ClearCore", "..\libClearCore\ClearCore.cppproj", "{2530D5B1-8A40-4A55-95CA-2EC0B63E2088}"
 EndProject
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "LwIP", "..\LwIP\LwIP.cppproj", "{C373696C-5D45-4B91-AD62-A21552361596}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "ModbusLib", "..\ModbusLib\ModbusLib.cppproj", "{AF951DD9-67EF-41E5-B7A8-01DE4598FC70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +32,10 @@ Global
 		{C373696C-5D45-4B91-AD62-A21552361596}.Debug|ARM.Build.0 = Debug|ARM
 		{C373696C-5D45-4B91-AD62-A21552361596}.Release|ARM.ActiveCfg = Release|ARM
 		{C373696C-5D45-4B91-AD62-A21552361596}.Release|ARM.Build.0 = Release|ARM
+		{AF951DD9-67EF-41E5-B7A8-01DE4598FC70}.Debug|ARM.ActiveCfg = Debug|ARM
+		{AF951DD9-67EF-41E5-B7A8-01DE4598FC70}.Debug|ARM.Build.0 = Debug|ARM
+		{AF951DD9-67EF-41E5-B7A8-01DE4598FC70}.Release|ARM.ActiveCfg = Release|ARM
+		{AF951DD9-67EF-41E5-B7A8-01DE4598FC70}.Release|ARM.Build.0 = Release|ARM
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

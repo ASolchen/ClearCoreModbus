@@ -2430,6 +2430,7 @@ START GROUP
 LOAD C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\4.5.0\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a
 LOAD C:\Users\asolchenberger\Documents\repos\ClearCoreModbus\libClearCore\Debug\libClearCore.a
 LOAD C:\Users\asolchenberger\Documents\repos\ClearCoreModbus\LwIP\Debug\libLwIP.a
+LOAD C:\Users\asolchenberger\Documents\repos\ClearCoreModbus\ModbusLib\Debug\libModbusLib.a
 END GROUP
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libstdc++.a
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libm.a
