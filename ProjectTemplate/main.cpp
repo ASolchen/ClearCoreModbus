@@ -38,4 +38,8 @@ ModbusTcpServer server;
 
 int main(void) {
 	server.Begin();
+	while(1){
+		server.Poll();
+		Delay_ms(10);
+	}
 }
