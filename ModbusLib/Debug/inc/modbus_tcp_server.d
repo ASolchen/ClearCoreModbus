@@ -167,7 +167,9 @@ inc/modbus_tcp_server.d inc/modbus_tcp_server.o: \
  ../../LwIP/LwIP/src/include/lwip/tcpbase.h \
  ../../LwIP/LwIP/src/include/lwip/icmp.h \
  ../../LwIP/LwIP/src/include/lwip/prot/icmp.h \
- ../../libClearCore/inc/EthernetTcpClient.h
+ ../../libClearCore/inc/EthernetTcpClient.h ../inc/libmodbus/modbus.h \
+ ../inc/libmodbus/modbus-version.h ../inc/libmodbus/modbus-private.h \
+ ../inc/libmodbus/modbus.h
 
 ../inc/modbus_tcp_server.h:
 
@@ -522,3 +524,11 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 ../../LwIP/LwIP/src/include/lwip/prot/icmp.h:
 
 ../../libClearCore/inc/EthernetTcpClient.h:
+
+../inc/libmodbus/modbus.h:
+
+../inc/libmodbus/modbus-version.h:
+
+../inc/libmodbus/modbus-private.h:
+
+../inc/libmodbus/modbus.h:

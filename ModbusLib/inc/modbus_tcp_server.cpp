@@ -5,8 +5,167 @@
 * Author: asolchenberger
 */
 
-
 #include "modbus_tcp_server.h"
+
+// modbus backend functions
+
+
+int build_request_basis_tcp(modbus_t *ctx, int function, int addr, int nb, uint8_t *req)
+{
+    modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)ctx->backend_data;
+
+    /* Increase transaction ID */
+    if (ctx_tcp->t_id < UINT16_MAX)
+        ctx_tcp->t_id++;
+    else
+        ctx_tcp->t_id = 0;
+    req[0] = ctx_tcp->t_id >> 8;
+    req[1] = ctx_tcp->t_id & 0x00ff;
+
+    /* Protocol Modbus */
+    req[2] = 0;
+    req[3] = 0;
+
+    /* Length will be defined later by set_req_length_tcp at offsets 4
+       and 5 */
+
+    req[6] = ctx->slave;
+    req[7] = function;
+    req[8] = addr >> 8;
+    req[9] = addr & 0x00ff;
+    req[10] = nb >> 8;
+    req[11] = nb & 0x00ff;
+
+    return _MODBUS_TCP_PRESET_REQ_LENGTH;
+}
+
+int build_response_basis_tcp(sft_t *sft, uint8_t *rsp)
+{
+    /* Extract from MODBUS Messaging on TCP/IP Implementation
+       Guide V1.0b (page 23/46):
+       The transaction identifier is used to associate the future
+       response with the request. */
+    rsp[0] = sft->t_id >> 8;
+    rsp[1] = sft->t_id & 0x00ff;
+
+    /* Protocol Modbus */
+    rsp[2] = 0;
+    rsp[3] = 0;
+
+    /* Length will be set later by send_msg (4 and 5) */
+
+    /* The slave ID is copied from the indication */
+    rsp[6] = sft->slave;
+    rsp[7] = sft->function;
+
+    return _MODBUS_TCP_PRESET_RSP_LENGTH;
+}
+
+int prepare_response_tid_tcp(const uint8_t *req, int *req_length)
+{
+    (void)req_length; // do nothing and keep the compiler from complaining about not using
+	return (req[0] << 8) + req[1];
+}
+
+int send_msg_pre_tcp(uint8_t *req, int req_length)
+{
+    /* Subbtract the header length to the message length */
+    int mbap_length = req_length - 6;
+
+    req[4] = mbap_length >> 8;
+    req[5] = mbap_length & 0x00FF;
+
+    return req_length;
+}
+
+ssize_t send_tcp(modbus_t *ctx, const uint8_t *req, int req_length)
+{
+    (void)ctx;
+    (void)req;
+    return req_length;
+	/*
+	modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)ctx->backend_data;
+	return ctx_tcp->client->write(req, req_length);
+	*/
+}
+
+int receive_tcp(modbus_t *ctx, uint8_t *req)
+{
+    return _modbus_receive_msg(ctx, req, MSG_INDICATION);
+}
+
+ssize_t recv_tcp(modbus_t *ctx, uint8_t *rsp, int rsp_length)
+{
+    (void)ctx;
+    (void)rsp;
+    return rsp_length;
+	/*
+	modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)ctx->backend_data;
+	return ctx_tcp->client->read(rsp, rsp_length);
+	*/
+}
+
+int check_integrity_tcp(modbus_t *ctx, uint8_t *msg, const int msg_length)
+{
+    (void)ctx;
+    (void)msg;
+    return msg_length;
+}
+
+int pre_check_confirmation_tcp(modbus_t *ctx, const uint8_t *req, const uint8_t *rsp, int rsp_length)
+{
+    (void)rsp_length;
+    /* Check transaction ID */
+    if (req[0] != rsp[0] || req[1] != rsp[1]) {
+	    if (ctx->debug) {
+		    //fprintf(stderr, "Invalid transaction ID received 0x%X (not 0x%X)\n",
+		    //(rsp[0] << 8) + rsp[1], (req[0] << 8) + req[1]);
+	    }
+	    //errno = EMBBADDATA;
+	    return -1;
+    }
+
+    /* Check protocol ID */
+    if (rsp[2] != 0x0 && rsp[3] != 0x0) {
+	    if (ctx->debug) {
+		    //fprintf(stderr, "Invalid protocol ID received 0x%X (not 0x0)\n",
+		    //(rsp[2] << 8) + rsp[3]);
+	    }
+	    //errno = EMBBADDATA;
+	    return -1;
+    }
+
+    return 0;
+}
+
+int connect_tcp(modbus_t *ctx)
+{
+    (void)ctx;
+	return 0;
+}
+
+void close_tcp(modbus_t *ctx)
+{
+    (void)ctx;
+}
+
+int flush_tcp(modbus_t *ctx)
+{
+    (void)ctx;
+    return 0;
+}
+
+int select_tcp(modbus_t *ctx, fd_set *rset, struct timeval *tv, int msg_length)
+{
+    (void)ctx;
+    (void)rset;
+    (void)tv;
+    (void)msg_length;
+	return 1;
+}
+
+
+
 
 // default constructor
 ModbusTcpServer::ModbusTcpServer()
@@ -66,8 +225,8 @@ int ModbusTcpServer::Begin()
 	_server->Begin();
 	// Resets a timer used to display a list of connected clients
 	_startTime = Milliseconds();
-	// Connect to clients, and send/receive packets
-
+	// Connect to clients, and send/receive packet
+	return 0;
 } 
 
 int ModbusTcpServer::AcceptClient()
@@ -134,6 +293,7 @@ int ModbusTcpServer::Poll()
 	// Perform any necessary periodic ethernet updates
 	// Must be called regularly when actively using ethernet
 	EthernetMgr.Refresh();
+	return 0;
 }
 
 int ModbusTcpServer::HandleRequest(int client_idx)
@@ -144,11 +304,12 @@ int ModbusTcpServer::HandleRequest(int client_idx)
 		_rx_len = _clients[client_idx].Read(_rx_buffer, BUFFER_LENGTH);
 		
 		//send to libmodbus here
+		modbus_reply(_ctx, _rx_buffer, _rx_len, _mb_mapping);
 		//_modbus_receive_msg(_ctx, _rx_buffer, MSG_INDICATION);
 		
 		// Clear the message buffer for the next iteration of the loop
 		for(int i=0; i<BUFFER_LENGTH; i++){
-			_rx_buffer[i]=NULL;
+			_rx_buffer[i]=(int8_t)NULL;
 		}
 	}
 	//Sends unique response to the client
@@ -156,11 +317,34 @@ int ModbusTcpServer::HandleRequest(int client_idx)
 	return _clients[client_idx].Send(_tx_buffer, _tx_len); //bytes sent
 }
 
-
 int ModbusTcpServer::InitContext()
 {
-	//_ctx = (modbus_t *)malloc(sizeof(modbus_t));
-	//_modbus_init_common(_ctx);
-	//modbus_set_slave(_ctx, MODBUS_TCP_SLAVE);
+	_ctx = new modbus_t;
+	_mb_mapping = modbus_mapping_new(128,128,64,64);
+	_ctx->backend = new modbus_backend_t{
+		_MODBUS_BACKEND_TYPE_TCP,
+		_MODBUS_TCP_HEADER_LENGTH,
+		_MODBUS_TCP_CHECKSUM_LENGTH,
+		MODBUS_TCP_MAX_ADU_LENGTH,
+		modbus_set_slave,
+		build_request_basis_tcp,
+		build_response_basis_tcp,
+		prepare_response_tid_tcp,
+		send_msg_pre_tcp,
+		send_tcp,
+		receive_tcp,
+		recv_tcp,
+		check_integrity_tcp,
+		pre_check_confirmation_tcp,
+		connect_tcp,
+		close_tcp,
+		flush_tcp,
+		select_tcp,
+		modbus_free
+	};
+	_ctx->backend_data = &_backend_data; //attach tcp data for t_id etc.
 	return 0;
 }
+
+
+

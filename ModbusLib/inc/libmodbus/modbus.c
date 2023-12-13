@@ -20,27 +20,6 @@
 #define printf(...) {}
 #define fprintf(...) {}
 
-
-#if defined(ARDUINO) && defined(__AVR__)
-#undef EIO
-#define EIO 5
-
-#undef EINVAL
-#define EINVAL 22
-
-#undef ENOPROTOOPT
-#define ENOPROTOOPT 109
-
-#undef ECONNREFUSED
-#define ECONNREFUSED 111
-
-#undef ETIMEDOUT
-#define ETIMEDOUT 116
-
-#undef ENOTSUP
-#define ENOTSUP 134
-#endif
-
 #include "modbus.h"
 #include "modbus-private.h"
 
@@ -62,30 +41,6 @@ typedef enum {
     _STEP_DATA
 } _step_t;
 
-#if defined(ARDUINO) && defined(__AVR__)
-
-char *strerror(int errnum)
-{
-    switch (errnum) {
-        case 0:
-            return "Success";
-        case EIO:
-            return "I/O error";
-        case EINVAL:
-            return "Invalid argument";
-        case ENOPROTOOPT:
-            return "Protocol not available";
-        case ECONNREFUSED:
-            return "Connection refused";
-        case ETIMEDOUT:
-            return "Connection timed out";
-        case ENOTSUP:
-            return "Not supported";
-        default:
-            return "Unknown";
-    }
-}
-#endif
 
 const char *modbus_strerror(int errnum) {
     switch (errnum) {
@@ -126,25 +81,14 @@ const char *modbus_strerror(int errnum) {
 
 void _error_print(modbus_t *ctx, const char *context)
 {
-    if (ctx->debug) {
-        //fprintf(stderr, "ERROR %s", modbus_strerror(errno));
-        serial_print(modbus_strerror(errno));
-        if (context != NULL) {
-            serial_print('Error and no context');
-            //fprintf(stderr, ": %s\n", context);
-        } else {
-            
-            serial_print('Error with context');
-            //fprintf(stderr, "\n");
-        }
-    }
+	//error, debug here
 }
 
 static void _sleep_response_timeout(modbus_t *ctx)
 {
     /* Response timeout is always positive */
-    delay(ctx->response_timeout.tv_sec * 1000);
-    delayMicroseconds(ctx->response_timeout.tv_usec);
+    //delay(ctx->response_timeout.tv_sec * 1000);
+    //delayMicroseconds(ctx->response_timeout.tv_usec);
 }
 
 int modbus_flush(modbus_t *ctx)
@@ -167,9 +111,7 @@ int modbus_flush(modbus_t *ctx)
 /* Computes the length of the expected response */
 static unsigned int compute_response_length_from_request(modbus_t *ctx, uint8_t *req)
 {
-#ifdef DEBUG
-    serial_print("modbus.c>compute_response_length_from_request()");
-#endif
+
     int length;
     const int offset = ctx->backend->header_length;
 
@@ -206,19 +148,11 @@ static unsigned int compute_response_length_from_request(modbus_t *ctx, uint8_t 
 /* Sends a request/response */
 static int send_msg(modbus_t *ctx, uint8_t *msg, int msg_length)
 {
-#ifdef DEBUG
-    serial_print("modbus.c>send_msg()");
-#endif
+
     int rc;
     int i;
 
     msg_length = ctx->backend->send_msg_pre(msg, msg_length);
-
-    if (ctx->debug) {
-        for (i = 0; i < msg_length; i++)
-            printf("[%.2X]", msg[i]);
-        printf("\n");
-    }
 
     /* In recovery mode, the write command will be issued until to be
        successful! Disabled by default. */
@@ -335,10 +269,7 @@ static uint8_t compute_meta_length_after_function(int function,
 /* Computes the length to read after the meta information (address, count, etc) */
 static int compute_data_length_after_meta(modbus_t *ctx, uint8_t *msg,
                                           msg_type_t msg_type)
-{
-#ifdef DEBUG
-    serial_print("modbus.c>compute_data_length_after_meta()");
-#endif    
+{   
     int function = msg[ctx->backend->header_length];
     int length;
 
@@ -397,9 +328,9 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
 
     if (ctx->debug) {
         if (msg_type == MSG_INDICATION) {
-            serial_print("Waiting for a indication...");
+            //serial_print("Waiting for a indication...");
         } else {
-            serial_print("Waiting for a confirmation...");
+            //serial_print("Waiting for a confirmation...");
         }
     }
 
@@ -420,7 +351,7 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
     }
 
     while (length_to_read != 0) {
-        rc = ctx->backend->select(ctx, &rset, p_tv, length_to_read); //checks if client availible
+        rc = ctx->backend->select(ctx, &rset, p_tv, length_to_read); //checks if client available
         if (rc == -1) {
             _error_print(ctx, "select");
             if (ctx->error_recovery & MODBUS_ERROR_RECOVERY_LINK) {
@@ -519,9 +450,6 @@ int _modbus_receive_msg(modbus_t *ctx, uint8_t *msg, msg_type_t msg_type)
 /* Receive the request from a modbus master */
 int modbus_receive(modbus_t *ctx, uint8_t *req)
 {
-#ifdef DEBUG
-    serial_print("modbus.c>modbus_receive()");
-#endif
     if (ctx == NULL) {
         errno = EINVAL;
         return -1;
@@ -745,9 +673,6 @@ static int response_exception(modbus_t *ctx, sft_t *sft,
 int modbus_reply(modbus_t *ctx, const uint8_t *req,
                  int req_length, modbus_mapping_t *mb_mapping)
 {
-#ifdef DEBUG
-    serial_print("modbus.c>modbus_reply()");
-#endif
     int offset;
     int slave;
     int function;

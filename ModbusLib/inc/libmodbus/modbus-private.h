@@ -8,17 +8,6 @@
 #ifndef MODBUS_PRIVATE_H
 #define MODBUS_PRIVATE_H
 
-#if defined(ARDUINO) && defined(__AVR__)
-#define ssize_t unsigned long
-#define fd_set void*
-
-struct timeval {
-    uint32_t tv_sec;
-    uint32_t tv_usec;
-};
-#else
-# include <sys/time.h>
-#endif
 
 #include <sys/types.h>
 #include "modbus.h"
