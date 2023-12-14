@@ -67,6 +67,7 @@ class ModbusTcpServer
 {
 //variables
 public:
+	modbus_mapping_t* _mb_mapping; //modbus context
 protected:
 private:
 	uint8_t _rx_buffer[BUFFER_LENGTH];
@@ -81,7 +82,7 @@ private:
 	modbus_backend_t _backend;
 	modbus_tcp_t _backend_data;
 	modbus_t* _ctx; //modbus context
-	modbus_mapping_t* _mb_mapping; //modbus context
+	
 		
 
 //functions

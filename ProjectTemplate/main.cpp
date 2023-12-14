@@ -33,14 +33,23 @@
  */
 #include "modbus_tcp_server.h"
 #include "ClearCore.h"
-
+Connector *const outputLEDs[6] = {
+	&ConnectorIO0, &ConnectorIO1, &ConnectorIO2, &ConnectorIO3, &ConnectorIO4, &ConnectorIO5
+};
 ModbusTcpServer server;
 
 int main(void) {
+	for(int i=0; i<6; i++){
+		outputLEDs[i]->Mode(Connector::OUTPUT_DIGITAL);
+	}
 	server.Begin();
-	//server.write_register(int addr, int nb, const uint16_t *data)
+	server._mb_mapping->tab_input_registers[2] = 20;
 	while(1){
 		server.Poll();
+		for(int i=0; i<6; i++){
+			outputLEDs[i]->State(server._mb_mapping->tab_bits[i]);
+		}
+
 		Delay_ms(10);
 	}
 }
