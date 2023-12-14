@@ -1,8 +1,8 @@
 /* 
 * modbus_tcp_server.cpp
-*
-* Created: 12/8/2023 8:13:36 AM
-* Author: asolchenberger
+* Copyright © 2010-2012 Stéphane Raimbault <stephane.raimbault@gmail.com>
+* Copyright © 2018 Arduino SA. All rights reserved.
+* Copyright © 2023 Adam Solchenberger <asolchenberger@gmail.com>
 */
 
 #include "modbus_tcp_server.h"
@@ -63,13 +63,13 @@ int build_response_basis_tcp(sft_t *sft, uint8_t *rsp)
 
 int prepare_response_tid_tcp(const uint8_t *req, int *req_length)
 {
-    (void)req_length; // do nothing and keep the compiler from complaining about not using
+    (void)req_length;
 	return (req[0] << 8) + req[1];
 }
 
 int send_msg_pre_tcp(uint8_t *req, int req_length)
 {
-    /* Subbtract the header length to the message length */
+    /* Subtract the header length to the message length */
     int mbap_length = req_length - 6;
 
     req[4] = mbap_length >> 8;
@@ -80,13 +80,8 @@ int send_msg_pre_tcp(uint8_t *req, int req_length)
 
 ssize_t send_tcp(modbus_t *ctx, const uint8_t *req, int req_length)
 {
-    (void)ctx;
-    (void)req;
-    return req_length;
-	/*
 	modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)ctx->backend_data;
-	return ctx_tcp->client->write(req, req_length);
-	*/
+	return ctx_tcp->client->Send(req, req_length);
 }
 
 int receive_tcp(modbus_t *ctx, uint8_t *req)
@@ -96,13 +91,8 @@ int receive_tcp(modbus_t *ctx, uint8_t *req)
 
 ssize_t recv_tcp(modbus_t *ctx, uint8_t *rsp, int rsp_length)
 {
-    (void)ctx;
-    (void)rsp;
-    return rsp_length;
-	/*
 	modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)ctx->backend_data;
-	return ctx_tcp->client->read(rsp, rsp_length);
-	*/
+	return ctx_tcp->client->Read(rsp, rsp_length);
 }
 
 int check_integrity_tcp(modbus_t *ctx, uint8_t *msg, const int msg_length)
@@ -139,29 +129,48 @@ int pre_check_confirmation_tcp(modbus_t *ctx, const uint8_t *req, const uint8_t 
 }
 
 int connect_tcp(modbus_t *ctx)
-{
-    (void)ctx;
+{	//Not sure this will be used until Client is implemented
+    modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)ctx->backend_data;
+    if (!ctx_tcp->client->Connect(ctx_tcp->ip, ctx_tcp->port)) {
+	    return -1;
+	}
 	return 0;
 }
 
 void close_tcp(modbus_t *ctx)
 {
-    (void)ctx;
+        modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)ctx->backend_data;
+        if(ctx_tcp && ctx_tcp->client) {
+	        ctx_tcp->client->Close();
+        }
 }
 
 int flush_tcp(modbus_t *ctx)
 {
-    (void)ctx;
+    modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)ctx->backend_data;
+    ctx_tcp->client->FlushInput();
     return 0;
 }
 
-int select_tcp(modbus_t *ctx, fd_set *rset, struct timeval *tv, int msg_length)
+int select_tcp(modbus_t *ctx, fd_set *rset, struct timeval *tv, int length_to_read)
 {
-    (void)ctx;
-    (void)rset;
-    (void)tv;
-    (void)msg_length;
-	return 1;
+	//this seems to be a 'wait' function to see if data is coming in, probably meant for RTU?
+    int s_rc;
+	(void)rset;
+    modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)ctx->backend_data;
+    unsigned long wait_time_millis = (tv == NULL) ? 0 : (tv->tv_sec * 1000) + (tv->tv_usec / 1000);
+    unsigned long start = Milliseconds();
+    do {
+	    s_rc = ctx_tcp->client->BytesAvailable();
+	    if (s_rc >= length_to_read) {
+		    break;
+	    }
+    } while ((Milliseconds() - start) < wait_time_millis && ctx_tcp->client->Connected());
+	if (s_rc == 0) {
+		//errno = ETIMEDOUT;
+		return -1;
+	}
+	return s_rc;
 }
 
 
@@ -202,11 +211,11 @@ int ModbusTcpServer::Begin()
 	} else {
 		// Configure with a manually assigned IP address
 		// Set ClearCore's IP address
-		IpAddress ip = IpAddress(172, 16, 10, 177);
+		IpAddress ip = IpAddress(192, 168, 10, 177);
 		EthernetMgr.LocalIp(ip);
 		ConnectorUsb.Send("Assigned manual IP address: ");
 		// Optionally, set additional network addresses if needed
-		IpAddress gateway = IpAddress(172, 16, 10, 1);
+		IpAddress gateway = IpAddress(192, 168, 10, 1);
 		IpAddress netmask = IpAddress(255, 255, 255, 0);
 		EthernetMgr.GatewayIp(gateway);
 		EthernetMgr.NetmaskIp(netmask);
@@ -265,14 +274,7 @@ int ModbusTcpServer::Poll()
 	// Loops through list of clients to receive/send messages
 	for(int i=0; i<NUMBER_OF_CLIENTS; i++){
 		if (_clients[i].Connected()) {
-			// Check if client has incoming data available	
-			if(_clients[i].BytesAvailable()){
-				if(HandleRequest(i) == 0){ //handle the request and return bytes sent back to client
-					// If the message was unable to send, close the client connection
-					_clients[i].Close();
-					_clients[i] = EthernetTcpClient();
-				}	
-			}			
+			HandleRequest(i);			
 		} else{
 			// Removes any disconnected clients
 			if(_clients[i].RemoteIp() != IpAddress(0,0,0,0)){
@@ -298,23 +300,17 @@ int ModbusTcpServer::Poll()
 
 int ModbusTcpServer::HandleRequest(int client_idx)
 {
-		// Read packet from the client
-	while (_clients[client_idx].BytesAvailable()) {
-		// Send the data received from the client over a serial port
-		_rx_len = _clients[client_idx].Read(_rx_buffer, BUFFER_LENGTH);
-		
-		//send to libmodbus here
-		modbus_reply(_ctx, _rx_buffer, _rx_len, _mb_mapping);
-		//_modbus_receive_msg(_ctx, _rx_buffer, MSG_INDICATION);
-		
-		// Clear the message buffer for the next iteration of the loop
-		for(int i=0; i<BUFFER_LENGTH; i++){
-			_rx_buffer[i]=(int8_t)NULL;
+	modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)_ctx->backend_data;
+	ctx_tcp->client = &_clients[client_idx];
+	if (ctx_tcp->client != NULL) {
+		uint8_t request[MODBUS_TCP_MAX_ADU_LENGTH];
+		int requestLength = modbus_receive(_ctx, request);
+		if (requestLength > 0) {
+			modbus_reply(_ctx, request, requestLength, _mb_mapping);
+			return 1; //success
 		}
 	}
-	//Sends unique response to the client
-	_tx_len = sprintf((char*)_tx_buffer, "Hello client %s",_clients[client_idx].RemoteIp().StringValue());
-	return _clients[client_idx].Send(_tx_buffer, _tx_len); //bytes sent
+	return 0;	
 }
 
 int ModbusTcpServer::InitContext()

@@ -1,8 +1,9 @@
 /* 
 * modbus_tcp_server.h
-*
-* Created: 12/8/2023 8:13:36 AM
-* Author: asolchenberger
+* Copyright © 2010-2012 Stéphane Raimbault <stephane.raimbault@gmail.com>
+* Copyright © 2018 Arduino SA. All rights reserved.
+* Copyright © 2023 Adam Solchenberger <asolchenberger@gmail.com>
+* SPDX-License-Identifier: LGPL-2.1+
 */
 
 
@@ -45,15 +46,18 @@ int pre_check_confirmation_tcp(modbus_t *ctx, const uint8_t *req, const uint8_t 
 int connect_tcp(modbus_t *ctx);
 void close_tcp(modbus_t *ctx);
 int flush_tcp(modbus_t *ctx);
-int select_tcp(modbus_t *ctx, fd_set *rset, struct timeval *tv, int msg_length);
+int select_tcp(modbus_t *ctx, fd_set *rset, struct timeval *tv, int length_to_read);
 
 typedef struct _modbus_tcp {
     /* Extract from MODBUS Messaging on TCP/IP Implementation Guide V1.0b
        (page 23/46):
        The transaction identifier is used to associate the future response
        with the request. This identifier is unique on each TCP connection. */
-    uint32_t err;
-    uint16_t t_id;
+    EthernetTcpServer* server;
+    EthernetTcpClient* client;
+	IpAddress			ip = IpAddress(0,0,0,0);
+	uint16_t			port = MODBUS_PORT;
+    uint16_t			t_id;
 	//may need to keep track of clients
 } modbus_tcp_t;
 

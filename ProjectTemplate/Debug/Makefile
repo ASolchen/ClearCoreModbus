@@ -73,9 +73,9 @@ ADDITIONAL_DEPENDENCIES:=
 OUTPUT_FILE_DEP:= ./makedep.mk
 
 LIB_DEP+=  \
-C:/Users/asolchenberger/Documents/repos/ClearCoreModbus/libClearCore/Debug/libClearCore.a \
-C:/Users/asolchenberger/Documents/repos/ClearCoreModbus/LwIP/Debug/libLwIP.a \
-C:/Users/asolchenberger/Documents/repos/ClearCoreModbus/ModbusLib/Debug/libModbusLib.a
+C:/Users/user/Documents/repos/ClearCoreModbus/libClearCore/Debug/libClearCore.a \
+C:/Users/user/Documents/repos/ClearCoreModbus/LwIP/Debug/libLwIP.a \
+C:/Users/user/Documents/repos/ClearCoreModbus/ModbusLib/Debug/libModbusLib.a
 
 LINKER_SCRIPT_DEP+=  \
 ../Device_Startup/flash_with_bootloader.ld \
@@ -123,7 +123,7 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER_SCRIPT_DEP)
 	@echo Building target: $@
 	@echo Invoking: ARM/GNU Linker : 6.3.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-g++.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -mthumb -Wl,-Map="ProjectTemplate.map" --specs=rdimon.specs -Wl,--start-group -lm -larm_cortexM4lf_math -lClearCore -lLwIP -lModbusLib  -Wl,--end-group -L"..\\Device_Startup" -L"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\4.5.0\CMSIS\Lib\GCC" -L"C:\Users\asolchenberger\Documents\repos\ClearCoreModbus\libClearCore\Debug" -L"C:\Users\asolchenberger\Documents\repos\ClearCoreModbus\LwIP\Debug" -L"C:\Users\asolchenberger\Documents\repos\ClearCoreModbus\ModbusLib\Debug"  -Wl,--gc-sections -mcpu=cortex-m4 -Tflash_with_bootloader.ld -mfloat-abi=hard -mfpu=fpv4-sp-d16  
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-g++.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -mthumb -Wl,-Map="ProjectTemplate.map" --specs=rdimon.specs -Wl,--start-group -lm -larm_cortexM4lf_math -lClearCore -lLwIP -lModbusLib  -Wl,--end-group -L"..\\Device_Startup" -L"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\4.5.0\CMSIS\Lib\GCC" -L"C:\Users\user\Documents\repos\ClearCoreModbus\libClearCore\Debug" -L"C:\Users\user\Documents\repos\ClearCoreModbus\LwIP\Debug" -L"C:\Users\user\Documents\repos\ClearCoreModbus\ModbusLib\Debug"  -Wl,--gc-sections -mcpu=cortex-m4 -Tflash_with_bootloader.ld -mfloat-abi=hard -mfpu=fpv4-sp-d16  
 	@echo Finished building target: $@
 	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O binary "ProjectTemplate.elf" "ProjectTemplate.bin"
 	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-size.exe" "ProjectTemplate.elf"

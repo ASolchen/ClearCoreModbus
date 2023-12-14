@@ -38,6 +38,7 @@ ModbusTcpServer server;
 
 int main(void) {
 	server.Begin();
+	//server.write_register(int addr, int nb, const uint16_t *data)
 	while(1){
 		server.Poll();
 		Delay_ms(10);
