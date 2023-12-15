@@ -33,23 +33,52 @@
  */
 #include "modbus_tcp_server.h"
 #include "ClearCore.h"
+#include "StepperControl.h"
+
+#define baudRate 9600
+#define SerialPort ConnectorUsb //ConnectorCOM0, or ConnectorCOM1
+
+
+
 Connector *const outputLEDs[6] = {
 	&ConnectorIO0, &ConnectorIO1, &ConnectorIO2, &ConnectorIO3, &ConnectorIO4, &ConnectorIO5
 };
 ModbusTcpServer server;
 
-int main(void) {
+StepperControl stepper;
+
+void setup()
+{
+	SerialPort.Mode(Connector::USB_CDC);
+    SerialPort.Speed(baudRate);
+	SerialPort.PortOpen();
 	for(int i=0; i<6; i++){
 		outputLEDs[i]->Mode(Connector::OUTPUT_DIGITAL);
 	}
 	server.Begin();
 	server._mb_mapping->tab_input_registers[2] = 20;
-	while(1){
-		server.Poll();
-		for(int i=0; i<6; i++){
-			outputLEDs[i]->State(server._mb_mapping->tab_bits[i]);
-		}
+	
+	stepper.Begin(&ConnectorM1, STEPPER_DIRECTION_FWD);
+	stepper.Homed();
+}
 
-		Delay_ms(10);
+
+void update_leds()
+{
+	for(int i=0; i<6; i++){
+		outputLEDs[i]->State(server._mb_mapping->tab_bits[i]);
+	}
+	uint32_t num = (Milliseconds() * 2) % 40000;
+	memcpy(&server._mb_mapping->tab_input_registers[0], &num, sizeof(uint32_t));
+	stepper.MoveTo(num/2);
+}
+
+int main(void)
+{
+	setup();
+	while(1){
+		server.Poll(); //update modbus
+		update_leds();
+		Delay_ms(50);
 	}
 }

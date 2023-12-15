@@ -249,14 +249,18 @@ int ModbusTcpServer::AcceptClient()
 				_clients[i].Close();
 				_clients[i] = _tempClient;
 				_newClient = 0;
+				char msg[80];
+				memset(msg,0x00,80);
+				sprintf(msg, "New Client %d", i);
+				SerialPort.SendLine(msg, sizeof(msg));
 				break;
 			}
 		}
 		// Rejects client if the client list is full 
 		if(_newClient == 1){
 			_newClient = 0;
-			_tempClient.Send("This server has reached its max number of clients. Closing connection.");
 			_tempClient.Close();
+			SerialPort.SendLine("Client rejected, too many connections");
 		}
 	}
 	return 0;

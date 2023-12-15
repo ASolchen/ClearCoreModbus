@@ -11,6 +11,9 @@
 #define __MODBUS_TCP_SERVER_H__
 
 #include "ClearCore.h"
+#define SerialPort ConnectorUsb //use for debug
+
+
 #include "EthernetTcpServer.h"
 #include "libmodbus/modbus.h"
 #include "libmodbus/modbus-private.h"
