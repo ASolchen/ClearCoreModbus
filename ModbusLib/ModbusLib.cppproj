@@ -281,6 +281,9 @@
     <Folder Include="inc\libmodbus" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="inc\cc_modbus.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="inc\libmodbus\modbus-data.c">
       <SubType>compile</SubType>
     </Compile>

@@ -4,7 +4,5 @@
 
 Device_Startup\startup_same53.c
 
-StepperControl\inc\StepperControl.cpp
-
 main.cpp
 

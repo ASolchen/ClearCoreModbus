@@ -1,6 +1,6 @@
-main.d main.o: .././main.cpp ../../ModbusLib/inc/modbus_tcp_server.h \
- ../../libClearCore/inc/ClearCore.h ../../libClearCore/inc/AdcManager.h \
- ../../libClearCore/inc/IirFilter.h ../../libClearCore/inc/SysTiming.h \
+main.d main.o: .././main.cpp ../../libClearCore/inc/ClearCore.h \
+ ../../libClearCore/inc/AdcManager.h ../../libClearCore/inc/IirFilter.h \
+ ../../libClearCore/inc/SysTiming.h \
  ../../libClearCore/inc/CcioBoardManager.h \
  ../../libClearCore/inc/CcioPin.h \
  C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include/sam.h \
@@ -159,7 +159,8 @@ main.d main.o: .././main.cpp ../../ModbusLib/inc/modbus_tcp_server.h \
  ../../libClearCore/inc/SysManager.h \
  ../../libClearCore/inc/MotorManager.h \
  ../../libClearCore/inc/SdCardDriver.h ../../libClearCore/inc/SerialUsb.h \
- ../../libClearCore/inc/XBeeDriver.h \
+ ../../libClearCore/inc/XBeeDriver.h ../../ModbusLib/inc/cc_modbus.h \
+ ../../ModbusLib/inc/modbus_tcp_server.h \
  ../../libClearCore/inc/EthernetTcpServer.h \
  ../../libClearCore/inc/EthernetTcp.h \
  ../../LwIP/LwIP/src/include/lwip/tcp.h \
@@ -170,10 +171,7 @@ main.d main.o: .././main.cpp ../../ModbusLib/inc/modbus_tcp_server.h \
  ../../ModbusLib/inc/libmodbus/modbus.h \
  ../../ModbusLib/inc/libmodbus/modbus-version.h \
  ../../ModbusLib/inc/libmodbus/modbus-private.h \
- ../../ModbusLib/inc/libmodbus/modbus.h \
- ../StepperControl/inc/StepperControl.h
-
-../../ModbusLib/inc/modbus_tcp_server.h:
+ ../../ModbusLib/inc/libmodbus/modbus.h
 
 ../../libClearCore/inc/ClearCore.h:
 
@@ -513,6 +511,10 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 
 ../../libClearCore/inc/XBeeDriver.h:
 
+../../ModbusLib/inc/cc_modbus.h:
+
+../../ModbusLib/inc/modbus_tcp_server.h:
+
 ../../libClearCore/inc/EthernetTcpServer.h:
 
 ../../libClearCore/inc/EthernetTcp.h:
@@ -534,5 +536,3 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 ../../ModbusLib/inc/libmodbus/modbus-private.h:
 
 ../../ModbusLib/inc/libmodbus/modbus.h:
-
-../StepperControl/inc/StepperControl.h:

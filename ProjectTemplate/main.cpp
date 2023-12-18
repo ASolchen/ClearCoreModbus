@@ -31,35 +31,22 @@
  * Copyright (c) 2022 Teknic Inc. This work is free to use, copy and distribute under the terms of
  * the standard MIT permissive software license which can be found at https://opensource.org/licenses/MIT
  */
-#include "modbus_tcp_server.h"
 #include "ClearCore.h"
-#include "StepperControl.h"
-
-#define baudRate 9600
-#define SerialPort ConnectorUsb //ConnectorCOM0, or ConnectorCOM1
-
-
+#include "cc_modbus.h"
 
 Connector *const outputLEDs[6] = {
 	&ConnectorIO0, &ConnectorIO1, &ConnectorIO2, &ConnectorIO3, &ConnectorIO4, &ConnectorIO5
 };
 ModbusTcpServer server;
 
-StepperControl stepper;
 
 void setup()
 {
-	SerialPort.Mode(Connector::USB_CDC);
-    SerialPort.Speed(baudRate);
-	SerialPort.PortOpen();
 	for(int i=0; i<6; i++){
 		outputLEDs[i]->Mode(Connector::OUTPUT_DIGITAL);
 	}
 	server.Begin();
 	server._mb_mapping->tab_input_registers[2] = 20;
-	
-	stepper.Begin(&ConnectorM1, STEPPER_DIRECTION_FWD);
-	stepper.Homed();
 }
 
 
@@ -70,7 +57,6 @@ void update_leds()
 	}
 	uint32_t num = (Milliseconds() * 2) % 40000;
 	memcpy(&server._mb_mapping->tab_input_registers[0], &num, sizeof(uint32_t));
-	stepper.MoveTo(num/2);
 }
 
 int main(void)

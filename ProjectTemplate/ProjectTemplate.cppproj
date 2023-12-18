@@ -193,7 +193,6 @@
       <Value>../../LwIP/LwIP/src/include</Value>
       <Value>../../LwIP/LwIP/port/include</Value>
       <Value>../../ModbusLib/inc</Value>
-      <Value>../StepperControl/inc</Value>
     </ListValues>
   </armgcccpp.compiler.directories.IncludePaths>
   <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
@@ -245,12 +244,6 @@
     <Compile Include="Device_Startup\startup_same53.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="StepperControl\inc\StepperControl.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="StepperControl\inc\StepperControl.h">
-      <SubType>compile</SubType>
-    </Compile>
     <None Include="Device_Startup\flash_without_bootloader.ld">
       <SubType>compile</SubType>
     </None>
@@ -260,8 +253,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Device_Startup\" />
-    <Folder Include="StepperControl" />
-    <Folder Include="StepperControl\inc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\libClearCore\ClearCore.cppproj">
