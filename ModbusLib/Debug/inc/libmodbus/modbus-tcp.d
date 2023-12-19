@@ -1,5 +1,5 @@
-inc/modbus_tcp_server.d inc/modbus_tcp_server.o: \
- ../inc/modbus_tcp_server.cpp ../inc/modbus_tcp_server.h \
+inc/libmodbus/modbus-tcp.d inc/libmodbus/modbus-tcp.o: \
+ ../inc/libmodbus/modbus-tcp.cpp ../inc/libmodbus/modbus_tcp.h \
  ../../libClearCore/inc/ClearCore.h ../../libClearCore/inc/AdcManager.h \
  ../../libClearCore/inc/IirFilter.h ../../libClearCore/inc/SysTiming.h \
  ../../libClearCore/inc/CcioBoardManager.h \
@@ -167,12 +167,11 @@ inc/modbus_tcp_server.d inc/modbus_tcp_server.o: \
  ../../LwIP/LwIP/src/include/lwip/tcpbase.h \
  ../../LwIP/LwIP/src/include/lwip/icmp.h \
  ../../LwIP/LwIP/src/include/lwip/prot/icmp.h \
- ../../libClearCore/inc/EthernetTcpClient.h ../inc/libmodbus/modbus_tcp.h \
- ../inc/libmodbus/modbus.h ../inc/libmodbus/modbus-version.h \
- ../inc/libmodbus/modbus-private.h ../inc/libmodbus/modbus.h \
- ../inc/modbus_server.h
+ ../../libClearCore/inc/EthernetTcpClient.h ../inc/libmodbus/modbus.h \
+ ../inc/libmodbus/modbus-version.h ../inc/libmodbus/modbus-private.h \
+ ../inc/libmodbus/modbus.h
 
-../inc/modbus_tcp_server.h:
+../inc/libmodbus/modbus_tcp.h:
 
 ../../libClearCore/inc/ClearCore.h:
 
@@ -526,8 +525,6 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 
 ../../libClearCore/inc/EthernetTcpClient.h:
 
-../inc/libmodbus/modbus_tcp.h:
-
 ../inc/libmodbus/modbus.h:
 
 ../inc/libmodbus/modbus-version.h:
@@ -535,5 +532,3 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 ../inc/libmodbus/modbus-private.h:
 
 ../inc/libmodbus/modbus.h:
-
-../inc/modbus_server.h:

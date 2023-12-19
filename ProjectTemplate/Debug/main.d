@@ -168,10 +168,12 @@ main.d main.o: .././main.cpp ../../libClearCore/inc/ClearCore.h \
  ../../LwIP/LwIP/src/include/lwip/icmp.h \
  ../../LwIP/LwIP/src/include/lwip/prot/icmp.h \
  ../../libClearCore/inc/EthernetTcpClient.h \
+ ../../ModbusLib/inc/libmodbus/modbus_tcp.h \
  ../../ModbusLib/inc/libmodbus/modbus.h \
  ../../ModbusLib/inc/libmodbus/modbus-version.h \
  ../../ModbusLib/inc/libmodbus/modbus-private.h \
- ../../ModbusLib/inc/libmodbus/modbus.h
+ ../../ModbusLib/inc/libmodbus/modbus.h \
+ ../../ModbusLib/inc/modbus_server.h
 
 ../../libClearCore/inc/ClearCore.h:
 
@@ -529,6 +531,8 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 
 ../../libClearCore/inc/EthernetTcpClient.h:
 
+../../ModbusLib/inc/libmodbus/modbus_tcp.h:
+
 ../../ModbusLib/inc/libmodbus/modbus.h:
 
 ../../ModbusLib/inc/libmodbus/modbus-version.h:
@@ -536,3 +540,5 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 ../../ModbusLib/inc/libmodbus/modbus-private.h:
 
 ../../ModbusLib/inc/libmodbus/modbus.h:
+
+../../ModbusLib/inc/modbus_server.h:

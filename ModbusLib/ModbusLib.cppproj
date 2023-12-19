@@ -290,6 +290,12 @@
     <Compile Include="inc\libmodbus\modbus-private.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="inc\libmodbus\modbus-tcp.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="inc\libmodbus\modbus_tcp.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="inc\libmodbus\modbus-version.h">
       <SubType>compile</SubType>
     </Compile>
@@ -297,6 +303,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="inc\libmodbus\modbus.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="inc\modbus_server.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="inc\modbus_server.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="inc\modbus_tcp_server.cpp">

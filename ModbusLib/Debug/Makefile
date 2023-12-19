@@ -40,7 +40,9 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../inc/libmodbus/modbus-data.c \
+../inc/libmodbus/modbus-tcp.cpp \
 ../inc/libmodbus/modbus.c \
+../inc/modbus_server.cpp \
 ../inc/modbus_tcp_server.cpp
 
 
@@ -52,22 +54,30 @@ ASM_SRCS +=
 
 OBJS +=  \
 inc/libmodbus/modbus-data.o \
+inc/libmodbus/modbus-tcp.o \
 inc/libmodbus/modbus.o \
+inc/modbus_server.o \
 inc/modbus_tcp_server.o
 
 OBJS_AS_ARGS +=  \
 inc/libmodbus/modbus-data.o \
+inc/libmodbus/modbus-tcp.o \
 inc/libmodbus/modbus.o \
+inc/modbus_server.o \
 inc/modbus_tcp_server.o
 
 C_DEPS +=  \
 inc/libmodbus/modbus-data.d \
+inc/libmodbus/modbus-tcp.d \
 inc/libmodbus/modbus.d \
+inc/modbus_server.d \
 inc/modbus_tcp_server.d
 
 C_DEPS_AS_ARGS +=  \
 inc/libmodbus/modbus-data.d \
+inc/libmodbus/modbus-tcp.d \
 inc/libmodbus/modbus.d \
+inc/modbus_server.d \
 inc/modbus_tcp_server.d
 
 OUTPUT_FILE_PATH +=libModbusLib.a
@@ -91,10 +101,24 @@ inc/libmodbus/modbus-data.o: ../inc/libmodbus/modbus-data.c
 	@echo Finished building: $<
 	
 
+inc/libmodbus/modbus-tcp.o: ../inc/libmodbus/modbus-tcp.cpp
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-g++.exe$(QUOTE) -mthumb -D__SAME53N19A__ -DARM_MATH_CM4 -DDEBUG -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\4.5.0\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include" -I"../inc" -I"../../LwIP/LwIP/port/include" -I"../../LwIP/LwIP/src/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"../../libClearCore/inc"  -O1 -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -g3 -Wall -Wextra -pedantic -mcpu=cortex-m4 -c -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -std=gnu++11 -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -MMD -v -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 inc/libmodbus/modbus.o: ../inc/libmodbus/modbus.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAME53N19A__ -DARM_MATH_CM4 -DDEBUG -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\4.5.0\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include" -I"../../libClearCore/inc" -I"../../LwIP/LwIP/port/include" -I"../../LwIP/LwIP/src/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"../inc"  -O1 -ffunction-sections -fdata-sections -g3 -Wall -Wextra -pedantic -mcpu=cortex-m4 -c -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -std=gnu11 --param max-inline-insns-single=50 -MMD -v -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+inc/modbus_server.o: ../inc/modbus_server.cpp
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-g++.exe$(QUOTE) -mthumb -D__SAME53N19A__ -DARM_MATH_CM4 -DDEBUG -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\4.5.0\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include" -I"../inc" -I"../../LwIP/LwIP/port/include" -I"../../LwIP/LwIP/src/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"../../libClearCore/inc"  -O1 -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -g3 -Wall -Wextra -pedantic -mcpu=cortex-m4 -c -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -std=gnu++11 -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -MMD -v -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
