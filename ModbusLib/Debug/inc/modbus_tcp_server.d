@@ -170,7 +170,7 @@ inc/modbus_tcp_server.d inc/modbus_tcp_server.o: \
  ../../libClearCore/inc/EthernetTcpClient.h ../inc/libmodbus/modbus_tcp.h \
  ../inc/libmodbus/modbus.h ../inc/libmodbus/modbus-version.h \
  ../inc/libmodbus/modbus-private.h ../inc/libmodbus/modbus.h \
- ../inc/modbus_server.h
+ ../inc/modbus_server.h ../inc/libmodbus/modbus.h
 
 ../inc/modbus_tcp_server.h:
 
@@ -537,3 +537,5 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 ../inc/libmodbus/modbus.h:
 
 ../inc/modbus_server.h:
+
+../inc/libmodbus/modbus.h:

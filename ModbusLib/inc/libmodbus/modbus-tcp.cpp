@@ -129,7 +129,7 @@ int pre_check_confirmation_tcp(modbus_t *ctx, const uint8_t *req, const uint8_t 
 }
 
 int connect_tcp(modbus_t *ctx)
-{	//Not sure this will be used until Client is implemented
+{
     modbus_tcp_t *ctx_tcp = (modbus_tcp_t*)ctx->backend_data;
     if (!ctx_tcp->client->Connect(ctx_tcp->ip, ctx_tcp->port)) {
 	    return -1;

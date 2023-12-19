@@ -22,7 +22,6 @@ class ModbusTcpServer : public ModbusServer
 {
 //variables
 public:
-	modbus_mapping_t* _mb_mapping; //modbus context
 protected:
 private:
 	uint8_t _rx_buffer[BUFFER_LENGTH];
@@ -43,14 +42,12 @@ private:
 //functions
 public:
 	ModbusTcpServer();
-	~ModbusTcpServer();
+	virtual ~ModbusTcpServer();
 	int Begin();
-	int Poll();
+	virtual int Poll();
 	
 protected:
 private:
-	ModbusTcpServer( const ModbusTcpServer &c );
-	ModbusTcpServer& operator=( const ModbusTcpServer &c );
 	int AcceptClient();
 	int HandleRequest(int);
 	int InitContext();

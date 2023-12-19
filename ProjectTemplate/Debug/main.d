@@ -173,7 +173,8 @@ main.d main.o: .././main.cpp ../../libClearCore/inc/ClearCore.h \
  ../../ModbusLib/inc/libmodbus/modbus-version.h \
  ../../ModbusLib/inc/libmodbus/modbus-private.h \
  ../../ModbusLib/inc/libmodbus/modbus.h \
- ../../ModbusLib/inc/modbus_server.h
+ ../../ModbusLib/inc/modbus_server.h \
+ ../../ModbusLib/inc/libmodbus/modbus.h
 
 ../../libClearCore/inc/ClearCore.h:
 
@@ -542,3 +543,5 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAME53_DFP\1.1.118\include
 ../../ModbusLib/inc/libmodbus/modbus.h:
 
 ../../ModbusLib/inc/modbus_server.h:
+
+../../ModbusLib/inc/libmodbus/modbus.h:

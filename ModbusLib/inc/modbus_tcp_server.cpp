@@ -8,12 +8,9 @@
 #include "modbus_tcp_server.h"
 
 
-
-
-
-
 // default constructor
-ModbusTcpServer::ModbusTcpServer()
+ModbusTcpServer::ModbusTcpServer() :
+_tempClient(NULL)
 {
 } //ModbusTcpServer
 
@@ -146,7 +143,7 @@ int ModbusTcpServer::HandleRequest(int client_idx)
 		uint8_t request[MODBUS_TCP_MAX_ADU_LENGTH];
 		int requestLength = modbus_receive(_ctx, request);
 		if (requestLength > 0) {
-			modbus_reply(_ctx, request, requestLength, _mb_mapping);
+			modbus_reply(_ctx, request, requestLength, &_mbMapping);
 			return 1; //success
 		}
 	}
@@ -156,7 +153,11 @@ int ModbusTcpServer::HandleRequest(int client_idx)
 int ModbusTcpServer::InitContext()
 {
 	_ctx = new modbus_t;
-	_mb_mapping = modbus_mapping_new(128,128,64,64);
+	//_mbMapping = modbus_mapping_new(128,128,64,64);
+	configureCoils(0,128);
+	configureDiscreteInputs(0,128);
+	configureInputRegisters(0,64);
+	configureHoldingRegisters(0,64);
 	_ctx->backend = new modbus_backend_t{
 		_MODBUS_BACKEND_TYPE_TCP,
 		_MODBUS_TCP_HEADER_LENGTH,

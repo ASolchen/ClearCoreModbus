@@ -46,17 +46,16 @@ void setup()
 		outputLEDs[i]->Mode(Connector::OUTPUT_DIGITAL);
 	}
 	server.Begin();
-	server._mb_mapping->tab_input_registers[2] = 20;
 }
 
 
 void update_leds()
 {
 	for(int i=0; i<6; i++){
-		outputLEDs[i]->State(server._mb_mapping->tab_bits[i]);
+		outputLEDs[i]->State(server.coilRead(i));
 	}
 	uint32_t num = (Milliseconds() * 2) % 40000;
-	memcpy(&server._mb_mapping->tab_input_registers[0], &num, sizeof(uint32_t));
+	server.inputRegisterWrite(0, num);
 }
 
 int main(void)
