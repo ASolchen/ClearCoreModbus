@@ -305,10 +305,22 @@
     <Compile Include="inc\libmodbus\modbus.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="inc\modbus_client.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="inc\modbus_client.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="inc\modbus_server.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="inc\modbus_server.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="inc\modbus_tcp_client.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="inc\modbus_tcp_client.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="inc\modbus_tcp_server.cpp">

@@ -52,4 +52,9 @@ int flush_tcp(modbus_t *ctx);
 int select_tcp(modbus_t *ctx, fd_set *rset, struct timeval *tv, int length_to_read);
 
 
+MODBUS_API modbus_t* modbus_new_tcp(EthernetTcpClient* client, IpAddress ip_address, int port);
+MODBUS_API int modbus_tcp_accept(modbus_t *ctx, EthernetTcpClient* client);
+MODBUS_API int modbus_tcp_listen(modbus_t *ctx);
+
+
 #endif /* MODBUS_TCP_H_ */

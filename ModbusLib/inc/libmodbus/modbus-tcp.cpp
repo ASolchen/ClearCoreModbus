@@ -172,3 +172,57 @@ int select_tcp(modbus_t *ctx, fd_set *rset, struct timeval *tv, int length_to_re
 	}
 	return s_rc;
 }
+
+static void modbus_free_tcp(modbus_t *ctx) {
+	free(ctx->backend_data);
+	free(ctx);
+}
+
+const modbus_backend_t _modbus_tcp_backend = {
+	_MODBUS_BACKEND_TYPE_TCP,
+	_MODBUS_TCP_HEADER_LENGTH,
+	_MODBUS_TCP_CHECKSUM_LENGTH,
+	MODBUS_TCP_MAX_ADU_LENGTH,
+	modbus_set_slave,
+	build_request_basis_tcp,
+	build_response_basis_tcp,
+	prepare_response_tid_tcp,
+	send_msg_pre_tcp,
+	send_tcp,
+	receive_tcp,
+	recv_tcp,
+	check_integrity_tcp,
+	pre_check_confirmation_tcp,
+	connect_tcp,
+	close_tcp,
+	flush_tcp,
+	select_tcp,
+	modbus_free_tcp
+};
+
+
+
+
+modbus_t* modbus_new_tcp(EthernetTcpClient* client, IpAddress ip_address, int port)
+{
+    modbus_t *ctx;
+    modbus_tcp_t *ctx_tcp;
+
+
+    ctx = (modbus_t *)malloc(sizeof(modbus_t));
+    _modbus_init_common(ctx);
+
+    /* Could be changed after to reach a remote serial Modbus device */
+    ctx->slave = MODBUS_TCP_SLAVE;
+
+    ctx->backend = &_modbus_tcp_backend;
+
+    ctx->backend_data = (modbus_tcp_t *)malloc(sizeof(modbus_tcp_t));
+    ctx_tcp = (modbus_tcp_t *)ctx->backend_data;
+    ctx_tcp->client = client;
+    ctx_tcp->ip = ip_address;
+    ctx_tcp->port = port;
+    ctx_tcp->t_id = 0;
+
+    return ctx;
+}
