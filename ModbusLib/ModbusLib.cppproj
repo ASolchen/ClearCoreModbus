@@ -290,7 +290,7 @@
     <Compile Include="inc\libmodbus\modbus-private.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="inc\libmodbus\modbus-tcp.cpp">
+    <Compile Include="inc\libmodbus\modbus_tcp.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="inc\libmodbus\modbus_tcp.h">

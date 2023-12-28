@@ -17,38 +17,45 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <errno.h>
-
-extern "C" {
-#include "libmodbus/modbus.h"
-#include "libmodbus/modbus_tcp.h"
-}
 
 #include "modbus_tcp_client.h"
 
-ModbusTCPClient::ModbusTCPClient(EthernetTcpClient& client) :
-  ModbusClient(30 * 1000),
-  _client(&client)
+ModbusTcpClient::ModbusTcpClient(unsigned long defaultTimeout)
+  : ModbusClient(defaultTimeout)
 {
 }
 
-ModbusTCPClient::~ModbusTCPClient()
+ModbusTcpClient::~ModbusTcpClient()
 {
 }
 
-int ModbusTCPClient::begin(IpAddress ip, uint16_t port)
+int ModbusTcpClient::Begin(IpAddress ip, uint16_t port)
 {
-  modbus_t* mb = modbus_new_tcp(_client, ip, port);
-
+  EthernetTcpClient c;
+  _client = &c;
+  _ip = ip;
+  _port = port;
+  modbus_t* mb = modbus_new_tcp(_client, _ip, _port);
   return ModbusClient::begin(mb, MODBUS_TCP_SLAVE);
 }
 
-int ModbusTCPClient::connected()
+int ModbusTcpClient::Connected()
 {
-  return _client->Connected();
+  if(!EthernetMgr.PhyLinkActive()){
+	  return 0;
+  }
+  bool status = 0;
+  if(_client->Connected()){
+	  status = 1;
+  } else {
+	  //modbus_t* mb = modbus_new_tcp(_client, _ip, _port);
+	  //ModbusClient::begin(mb, MODBUS_TCP_SLAVE);
+  }
+  
+  return status;
 }
 
-void ModbusTCPClient::stop()
+void ModbusTcpClient::Close()
 {
   end();
 }

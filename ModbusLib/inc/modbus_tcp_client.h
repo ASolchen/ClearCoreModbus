@@ -10,16 +10,21 @@
 #define _MODBUS_TCP_CLIENT_H_INCLUDED
 
 #include "modbus_client.h"
+#include "libmodbus/modbus_tcp.h"
+#include <errno.h>
+extern "C" {
+	#include "libmodbus/modbus.h"
+}
 
-class ModbusTCPClient : public ModbusClient {
+class ModbusTcpClient : public ModbusClient {
 public:
   /**
-   * ModbusTCPClient constructor
+   * ModbusTcpClient constructor
    *
    * @param client Client to use for TCP connection
    */
-  ModbusTCPClient(EthernetTcpClient& client);
-  virtual ~ModbusTCPClient();
+  ModbusTcpClient(unsigned long defaultTimeout=30000);
+  virtual ~ModbusTcpClient();
 
   /**
    * Start the Modbus TCP client with the specified parameters
@@ -29,22 +34,24 @@ public:
    *
    * @return 1 on success, 0 on failure
    */
-  int begin(IpAddress ip, uint16_t port = 502);
+  int Begin(IpAddress ip, uint16_t port=MODBUS_PORT);
 
   /**
    * Query connection status.
    *
    * @return 1 if connected, 0 if not connected
    */
-  int connected();
+  int Connected();
 
   /**
    * Disconnect the client.
    */
-  void stop();
+  void Close();
 
 private:
   EthernetTcpClient* _client;
+  IpAddress _ip;
+  uint32_t _port;
 };
 
 #endif

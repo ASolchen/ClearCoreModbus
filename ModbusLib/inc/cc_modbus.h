@@ -12,7 +12,7 @@
 //#include "modbus_rtu_server.h"
 //#include "modbus_rtu_client.h"
 #include "modbus_tcp_server.h"
-//#include "modbus_tcp_client.h"
+#include "modbus_tcp_client.h"
 
 
 #endif /* CC_MODBUS_H_ */

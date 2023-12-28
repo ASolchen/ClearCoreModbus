@@ -1,69 +1,89 @@
-/*
- * Title: EthernetTCPServer_manualClientManagement 
- *
- * Objective:
- *    This example demonstrates how to configure a ClearCore as a TCP server to 
- *    send and receive TCP datagrams (packets).
- *    
- * Description:
- *    This example configures a ClearCore device to act as a TCP server. 
- *    This server can receive connections from several other devices acting as TCP 
- *    clients to exchange data over ethernet TCP. 
- *    This simple example accepts connection requests from clients, checks for
- *    incoming data from connected devices, and sends a simple "Hello 
- *    client" response.
- *    A partner project, EthernetTcpClientHelloWorld, can be used to configure 
- *    another ClearCore as a client device.
- *
- * Setup:
- * 1. Set the usingDhcp boolean as appropriate. If not using DHCP, specify static 
- *    IP and network information.
- * 2. Ensure the server and client are setup to communicate on the same network.
- *    If server and client devices are directly connected (as opposed to through a switch)
- *    an ethernet crossover cable may be required. 
- * 3. It may be helpful to use another application to view serial output from 
- *    each device. PuTTY is one such application: https://www.putty.org/
- *
- * Links:
- * ** ClearCore Documentation: https://teknic-inc.github.io/ClearCore-library/
- * ** ClearCore Manual: https://www.teknic.com/files/downloads/clearcore_user_manual.pdf
- * 
- * Copyright (c) 2022 Teknic Inc. This work is free to use, copy and distribute under the terms of
- * the standard MIT permissive software license which can be found at https://opensource.org/licenses/MIT
- */
 #include "ClearCore.h"
 #include "cc_modbus.h"
 
 Connector *const outputLEDs[6] = {
 	&ConnectorIO0, &ConnectorIO1, &ConnectorIO2, &ConnectorIO3, &ConnectorIO4, &ConnectorIO5
 };
-ModbusTcpServer server;
+//ModbusTcpServer server;
+ModbusTcpClient mb_client;
 
 
 void setup()
 {
+	// Set usingDhcp to false to use user defined network settings
+	bool usingDhcp = false;
+	// Make sure the physical link is active before continuing
+	while (!EthernetMgr.PhyLinkActive()) {
+		Delay_ms(100);
+	}
+	EthernetMgr.Setup();
+	//To configure with an IP address assigned via DHCP
+	if (usingDhcp) {
+		// Use DHCP to configure the local IP address
+		bool dhcpSuccess = EthernetMgr.DhcpBegin();
+		if (!dhcpSuccess) {
+			while (true) {
+				// TCP will not work without a configured IP address
+				continue;
+			}
+		}
+	} else {
+		// Configure with a manually assigned IP address
+		// Set ClearCore's IP address
+		IpAddress ip = IpAddress(192, 168, 11, 177);
+		EthernetMgr.LocalIp(ip);
+		ConnectorUsb.Send("Assigned manual IP address: ");
+		// Optionally, set additional network addresses if needed
+		IpAddress gateway = IpAddress(192, 168, 11, 1);
+		IpAddress netmask = IpAddress(255, 255, 255, 0);
+		EthernetMgr.GatewayIp(gateway);
+		EthernetMgr.NetmaskIp(netmask);
+	}
 	for(int i=0; i<6; i++){
 		outputLEDs[i]->Mode(Connector::OUTPUT_DIGITAL);
 	}
-	server.Begin();
+	//server.Begin();
+	mb_client.Begin(IpAddress(192, 168, 11, 200));
+	
 }
 
 
 void update_leds()
 {
 	for(int i=0; i<6; i++){
-		outputLEDs[i]->State(server.coilRead(i));
+		outputLEDs[i]->State(mb_client.coilRead(i));
 	}
 	uint32_t num = (Milliseconds() * 2) % 40000;
-	server.inputRegisterWrite(0, num);
+	//server.inputRegisterWrite(0, num);
 }
+
+uint32_t t = Milliseconds();
+
+
+
+void modbus_update(){
+	if(!mb_client.Connected()){
+	} else {
+		mb_client.coilWrite(1, !mb_client.coilRead(1));
+	}
+	
+}
+
+
+
+
 
 int main(void)
 {
 	setup();
 	while(1){
-		server.Poll(); //update modbus
+		//server.Poll(); //update modbus
 		update_leds();
-		Delay_ms(50);
+		Delay_ms(10);
+		if ((Milliseconds() - t) > 500){
+			t = Milliseconds();
+			modbus_update();			
+		}
+		EthernetMgr.Refresh();		
 	}
 }

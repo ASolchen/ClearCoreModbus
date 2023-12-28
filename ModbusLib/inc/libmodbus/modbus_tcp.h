@@ -30,8 +30,8 @@ typedef struct _modbus_tcp {
        with the request. This identifier is unique on each TCP connection. */
     EthernetTcpServer* server;
     EthernetTcpClient* client;
-	IpAddress			ip = IpAddress(0,0,0,0);
-	uint16_t			port = MODBUS_PORT;
+	IpAddress			ip;
+	uint16_t			port;
     uint16_t			t_id;
 	//may need to keep track of clients
 } modbus_tcp_t;
@@ -52,9 +52,9 @@ int flush_tcp(modbus_t *ctx);
 int select_tcp(modbus_t *ctx, fd_set *rset, struct timeval *tv, int length_to_read);
 
 
-MODBUS_API modbus_t* modbus_new_tcp(EthernetTcpClient* client, IpAddress ip_address, int port);
-MODBUS_API int modbus_tcp_accept(modbus_t *ctx, EthernetTcpClient* client);
-MODBUS_API int modbus_tcp_listen(modbus_t *ctx);
+modbus_t* modbus_new_tcp(EthernetTcpClient* client, IpAddress ip_address, uint16_t port);
+int modbus_tcp_accept(modbus_t *ctx, EthernetTcpClient* client);
+int modbus_tcp_listen(modbus_t *ctx);
 
 
 #endif /* MODBUS_TCP_H_ */

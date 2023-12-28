@@ -4,7 +4,7 @@
 
 inc\libmodbus\modbus-data.c
 
-inc\libmodbus\modbus-tcp.cpp
+inc\libmodbus\modbus_tcp.cpp
 
 inc\libmodbus\modbus.c
 
